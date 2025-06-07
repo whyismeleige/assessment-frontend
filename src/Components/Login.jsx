@@ -49,11 +49,11 @@ export default function Login(props) {
     const response = isLogin ? await loginUser({email,password}) :await registerUser({email,password});
     if(!isLogin){
       setIsSuccess(true);
-      setNotification("Registered Successfully and Now Please Log In");
       setIsLogin(true);
     }else{
       props.setUserToken(response.token);
     }
+    setNotification(response.message);
   }
 
   return (
@@ -96,7 +96,7 @@ export default function Login(props) {
           </div>
           {notification && (
             <div className="notification-container">
-              <span className={clsx('notification')} color={isSuccess ? "red" : "green"}>
+              <span className={clsx('notification')} style={{color:isSuccess ? "green" : "red"}}>
                 {isSuccess ? <FontAwesomeIcon icon={faThumbsUp}/> : <FontAwesomeIcon icon={faTriangleExclamation}/>}
                 {notification}
               </span>
