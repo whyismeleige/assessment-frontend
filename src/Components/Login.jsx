@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
-import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import clsx from 'clsx'
 import "../Styles/Login.css";
 
-const SERVER_URL = 'http://localhost:8080';
+const SERVER_URL = 'https://assessment-backend-vxbe.onrender.com';
 
 async function registerUser(credentials){
   return fetch(`${SERVER_URL}/register`,{
@@ -34,7 +33,7 @@ export default function Login(props) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [notification, setNotification] = useState("");
   const [isSuccess,setIsSuccess] = useState(false);
-  
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if(!emailValidation(email)){
