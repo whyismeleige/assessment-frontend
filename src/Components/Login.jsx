@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import clsx from 'clsx'
 import "../Styles/Login.css";
 
@@ -37,15 +37,18 @@ export default function Login(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if(!emailValidation(email)){
+      setIsSuccess(false);
       setNotification("Email Do Not Match");
       return;
     }
     if(!isLogin && password != confirmPassword){
+      setIsSuccess(false);
       setNotification("Passwords Do not Match!");
       return;
     }
     const response = isLogin ? await loginUser({email,password}) :await registerUser({email,password});
     if(!isLogin){
+      setIsSuccess(true);
       setNotification("Registered Successfully and Now Please Log In");
       setIsLogin(true);
     }else{
@@ -93,8 +96,8 @@ export default function Login(props) {
           </div>
           {notification && (
             <div className="notification-container">
-              <span className={clsx('notification',{})}>
-                <FontAwesomeIcon icon={faTriangleExclamation} />
+              <span className={clsx('notification')} color={isSuccess ? "red" : "green"}>
+                {isSuccess ? <FontAwesomeIcon icon={faThumbsUp}/> : <FontAwesomeIcon icon={faTriangleExclamation}/>}
                 {notification}
               </span>
             </div>
